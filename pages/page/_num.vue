@@ -1,16 +1,12 @@
 <template>
   <div class="container">
     <ul>
-      <li v-for="document in results">
+      <li v-for="document in results" :key="document.id">
         {{ $prismic.asText(document.data.title) }}
       </li>
     </ul>
-    <nuxt-link
-      v-if="+$route.params.num > 1"
-      :to="'/page/' + (+$route.params.num - 1)"
-      >« Prev Page</nuxt-link
-    >
-    <nuxt-link :to="'/page/' + (+$route.params.num + 1)">Next Page »</nuxt-link>
+    <nuxt-link v-if="notFirstPage" :to="prevPage">« Prev Page</nuxt-link>
+    <nuxt-link :to="nextPage">Next Page »</nuxt-link>
   </div>
 </template>
 
@@ -26,6 +22,17 @@ export default {
       return { results };
     } else {
       error({ statusCode: 404, message: "Page not found" });
+    }
+  },
+  computed: {
+    notFirstPage() {
+      return +this.$route.params.num > 1;
+    },
+    prevPage() {
+      return "/page/" + (+this.$route.params.num - 1);
+    },
+    nextPage() {
+      return "/page/" + (+this.$route.params.num + 1);
     }
   }
 };
