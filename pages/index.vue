@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <ul>
-      <li v-for="document in results">
+      <li v-for="document in results" :key="document.id">
         {{ $prismic.asText(document.data.title) }}
       </li>
     </ul>
