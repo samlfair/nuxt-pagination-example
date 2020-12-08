@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <ul>
+    <ol>
       <li v-for="document in results" :key="document.id">
         {{ $prismic.asText(document.data.title) }}
       </li>
-    </ul>
+    </ol>
     <nuxt-link to="/page/2">Next Page »</nuxt-link>
   </div>
 </template>

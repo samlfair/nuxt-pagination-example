@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <ul>
+    <ol :start="start">
       <li v-for="document in results" :key="document.id">
         {{ $prismic.asText(document.data.title) }}
       </li>
-    </ul>
+    </ol>
     <nuxt-link v-if="notFirstPage" :to="prevPage">« Prev Page</nuxt-link>
     <nuxt-link :to="nextPage">Next Page »</nuxt-link>
   </div>
@@ -29,10 +29,14 @@ export default {
       return +this.$route.params.num > 1;
     },
     prevPage() {
+      if (this.$route.params.num === "2") return "/";
       return "/page/" + (+this.$route.params.num - 1);
     },
     nextPage() {
       return "/page/" + (+this.$route.params.num + 1);
+    },
+    start() {
+      return (+this.$route.params.num - 1) * 20 + 1;
     }
   }
 };
